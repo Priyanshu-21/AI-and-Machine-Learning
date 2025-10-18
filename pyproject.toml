@@ -1,0 +1,14 @@
+[project]
+name = "ai-and-machine-learning"
+version = "0.1.0"
+description = "capture different beautiful machine learning techniques and algorithms to prepare data, train data, designing models and deployment of models."
+readme = "Readme.md"
+requires-python = ">=3.12"
+dependencies = [
+    "learn>=1.0.0",
+    "matplotlib>=3.10.7",
+    "numpy>=2.3.4",
+    "pandas>=2.3.3",
+    "sci-kit>=0.1.0",
+    "seaborn>=0.13.2",
+]
