@@ -19,7 +19,7 @@ class AutoEncoder():
         self.decoder_inputs = layers.Reshape(target_shape= (4, 4, 1))
         self.decode1 = layers.Conv2DTranspose(32, 2, activation= 'relu', padding= 'same')
         self.decode2 = layers.Conv2DTranspose(64, 3, activation= 'relu', padding= 'same')
-        self.depool = layers.UpSampling2D(3)
+        self.depool = layers.UpSampling2D(size= (7, 7))
         self.corrected_layer = layers.Conv2DTranspose(16, 2, activation= 'relu', padding= 'same')
         self.decoder_output = layers.Conv2DTranspose(1, 3, activation= 'sigmoid', padding= 'same')
 
@@ -70,7 +70,7 @@ model.summary()
 history = model.fit(x_train, x_train, validation_data= (x_test, x_test), batch_size= 128, epochs= 10, verbose= 2)
 
 # Model Testing 
-decoded_img = model.evaluate(x_test[:10]) # pick up the first 10 images to evaludate
+decoded_img = model.predict(x_test[:10]) # pick up the first 10 images to predict
 
 # Image Visualization 
 n = 10
@@ -93,4 +93,4 @@ for i in range(n):
 
 plt.show()
 
-#TODO: - Do changes in model structure to train the model optimally. 
+#TODO: - Model is trainable but not generating image output
