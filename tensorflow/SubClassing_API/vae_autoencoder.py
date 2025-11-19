@@ -66,7 +66,7 @@ class AutoEncoder(keras.Model):
         
         # add loss method (KL Divergence Regularization Loss)
         kl_loss = -0.5 * tf.reduce_mean(
-            z_var - tf.square(z_mean) + tf.exp(z_var) + 1
+            z_var - tf.square(z_mean) - tf.exp(z_var) + 1
         )
 
         self.add_loss(kl_loss)
@@ -91,8 +91,8 @@ x_test = x_test.reshape(x_test.shape[0], 784).astype('float32') / 255
 train_dataset = tf.data.Dataset.from_tensor_slices(x_train)
 train_dataset = train_dataset.shuffle(buffer_size= 1024).batch(64)
 
-# Training Loop 
-epochs = 2
+# Training Loop for 5 Epochs 
+epochs = 5
 
 for epoch in range(epochs):
     print('Number of Epochs of training: ', epoch)
@@ -112,9 +112,9 @@ for epoch in range(epochs):
         loss_metrics(loss)
 
         if (step % 100) == 0:
-            print('Loss in step %d is %.4f' % (step, loss_metrics.result()))
+            print('Mean Loss in step %d is %.4f' % (step, loss_metrics.result()))
 
-# TODO: - Need to understand and learn about training loops 
+# TODO: - Need to understand model evaluation & prediction 
 '''
 # Sample Input 
 auto_encoder = AutoEncoder(784)
@@ -131,4 +131,8 @@ print('AutoEncoded Outputs: ', outputs)
 Implementation of variational autoEncoder: Generative Predictive Modeling 
 1. Encoder Layer: - (batch_size, model_dims, intermediate_dims) ==> (z_mean, z_var_loss, z)
 2. Sampling Layer: - (Sampling(z_mean + exp(0.5 * var_log) * random_normal(batch, dims)
+3. Decoder Layer: - Reconstruct the image from the z - space of the resulted Encoder layer 
+
+Model (AutoEncoder): - 
+1. Call -> Encoder -> Sampling -> Decoder -> Reconstructed image 
 '''
